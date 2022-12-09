@@ -47,7 +47,7 @@ public interface TagMergeRule {
         public @Nullable String ctf(String commonTag) {
             ArrayList<String> parts = new ArrayList<>();
             parts.addAll(List.of(commonTag.split("_")));
-            if (parts.contains(matchingPartCommon) && parts.size() >= 2) {
+            if (commonTag.contains(matchingPartCommon) && parts.size() >= 2 + getSubCount(matchingPartCommon, "_")) {
                 Collections.reverse(parts);
                 return matchingPartForge + "/" + commonTag.replaceAll("_" + matchingPartCommon, "");
             }
@@ -58,12 +58,16 @@ public interface TagMergeRule {
         public @Nullable String ftc(String forgeTag) {
             ArrayList<String> parts = new ArrayList<>();
             parts.addAll(List.of(forgeTag.split("/")));
-            if (parts.contains(matchingPartForge) && parts.size() >= 2) {
+            if (forgeTag.contains(matchingPartForge) && parts.size() >= 2) {
                 Collections.reverse(parts);
                 parts.replaceAll(in -> in.equals(matchingPartForge) ? matchingPartCommon : in);
                 return String.join("_", parts.toArray(new String[0]));
             }
             return null;
+        }
+
+        private static int getSubCount(String main, String sub) {
+            return (main.length() - main.replaceAll(sub, "").length()) / sub.length();
         }
     }
 
