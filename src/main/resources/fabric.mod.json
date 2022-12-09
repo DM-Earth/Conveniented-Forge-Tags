@@ -1,29 +1,22 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "cftags",
   "version": "${version}",
 
-  "name": "modid",
+  "name": "Conveniented Forge Tags",
   "description": "This is an example description! Tell everyone what your mod is about!",
-  "authors": [
-    "DM Earth"
-  ],
+  "authors": ["DM Earth"],
   "contact": {
     "homepage": "https://github.com/DM-Earth"
   },
 
   "license": "MIT",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/cftags/icon.png",
 
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "com.dm.earth.modid.ModId"
-    ]
+    "main": ["com.dm.earth.cftags.CFTagsMerger"]
   },
-  "mixins": [
-    "modid.mixins.json"
-  ],
 
   "depends": {
     "fabricloader": ">=0.14.6",
