@@ -4,13 +4,13 @@
   "version": "${version}",
 
   "name": "Conveniented Forge Tags",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "Merge Conventional tags and Forge tags together",
   "authors": ["DM Earth"],
   "contact": {
-    "homepage": "https://github.com/DM-Earth"
+    "sources": "https://github.com/DM-Earth/Conveniented-Forge-Tags"
   },
 
-  "license": "MIT",
+  "license": "GPL-3.0",
   "icon": "assets/cftags/icon.png",
 
   "environment": "*",
