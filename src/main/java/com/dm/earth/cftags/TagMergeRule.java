@@ -34,20 +34,22 @@ public interface TagMergeRule {
         return c == null || c.equals(forgeTag.getPath()) ? Optional.empty() : Optional.of(new Identifier("c", c));
     }
 
-    static class Simple implements TagMergeRule {
-        protected final String matchingPart;
+    static class Common implements TagMergeRule {
+        protected final String matchingPartForge;
+        protected final String matchingPartCommon;
 
-        public Simple(String part) {
-            this.matchingPart = part;
+        public Common(String cPart, String fPart) {
+            this.matchingPartForge = fPart;
+            this.matchingPartCommon = cPart;
         }
 
         @Override
         public @Nullable String ctf(String commonTag) {
             ArrayList<String> parts = new ArrayList<>();
             parts.addAll(List.of(commonTag.split("_")));
-            if (parts.contains(matchingPart) && parts.size() >= 2) {
+            if (parts.contains(matchingPartCommon) && parts.size() >= 2) {
                 Collections.reverse(parts);
-                return matchingPart + "/" + commonTag.replaceAll("_" + matchingPart, "");
+                return matchingPartForge + "/" + commonTag.replaceAll("_" + matchingPartCommon, "");
             }
             return null;
         }
@@ -56,11 +58,18 @@ public interface TagMergeRule {
         public @Nullable String ftc(String forgeTag) {
             ArrayList<String> parts = new ArrayList<>();
             parts.addAll(List.of(forgeTag.split("/")));
-            if (parts.contains(matchingPart) && parts.size() >= 2) {
+            if (parts.contains(matchingPartForge) && parts.size() >= 2) {
                 Collections.reverse(parts);
+                parts.replaceAll(in -> in.equals(matchingPartForge) ? matchingPartCommon : in);
                 return String.join("_", parts.toArray(new String[0]));
             }
             return null;
+        }
+    }
+
+    static class Simple extends Common {
+        public Simple(String part) {
+            super(part, part);
         }
     }
 

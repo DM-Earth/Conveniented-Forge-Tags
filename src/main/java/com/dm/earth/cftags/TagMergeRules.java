@@ -12,6 +12,7 @@ public class TagMergeRules {
     public static final TagMergeRule RODS = register(new TagMergeRule.Simple("rods"));
 
     public static final TagMergeRule ORES = register(new TagMergeRule.Simple("ores"));
+    public static final TagMergeRule RAW_ORE_BLOCKS = register(new TagMergeRule.Common("blocks", "storage_blocks"));
 
     public static void load() {
     }
