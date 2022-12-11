@@ -10,12 +10,16 @@ If you're playing Create Fabric (or other mods that use [ForgeTags](https://gith
 
 ```
 Ingots
+Double Ingots
 Plates
 Dusts
 Small Dusts
 Tiny Dusts
 Nuggets
 Rods
+Wires
+Coins
+Gears
 Dyes
 Seeds
 Ores

@@ -2,22 +2,25 @@
   "schemaVersion": 1,
   "id": "cftags",
   "version": "${version}",
-
   "name": "Conveniented Forge Tags",
   "description": "Merge Conventional tags and Forge tags together",
-  "authors": ["DM Earth"],
+  "authors": [
+    "DM Earth"
+  ],
   "contact": {
     "sources": "https://github.com/DM-Earth/Conveniented-Forge-Tags"
   },
-
   "license": "GPL-3.0",
   "icon": "assets/cftags/icon.png",
-
   "environment": "*",
   "entrypoints": {
-    "main": ["com.dm.earth.cftags.CFTagsMerger"]
+    "main": [
+      "com.dm.earth.cftags.CFTagsMerger"
+    ]
   },
-
+  "mixins": [
+    "cftags.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=0.14.6",
     "fabric": "*",

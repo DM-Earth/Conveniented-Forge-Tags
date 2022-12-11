@@ -1,5 +1,6 @@
 package com.dm.earth.cftags;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,15 +17,19 @@ import net.minecraft.util.Identifier;
 public class CFTagsMerger implements ModInitializer {
 	public static final String MODID = "cftags";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+	public static final boolean DEBUG = false;
 
 	@Override
 	public void onInitialize() {
+		TagMergeRules.load();
+
 		LoadTagsCallback.ITEM.register(handler -> {
 			LOGGER.info("Syncing Forge tags and Convenient tags!");
-			TagMergeRules.load();
+			ArrayList<TagMergeRule> rules = new ArrayList<>(TagMergeRule.RULES.stream().filter(TagMergeRule::isHighPriority).toList());
+			rules.addAll(TagMergeRule.RULES.stream().filter(rule -> !rule.isHighPriority()).toList());
 
 			for (TagKey<Item> key : handler.getKeys())
-				for (TagMergeRule rule : TagMergeRule.RULES) {
+				for (TagMergeRule rule : rules) {
 					Identifier id = key.id();
 
 					Optional<Identifier> ftc = rule.ftc(id);

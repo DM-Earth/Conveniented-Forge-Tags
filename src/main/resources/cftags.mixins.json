@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.dm.earth.cftags.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "ResourceConditionsImplMixin"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

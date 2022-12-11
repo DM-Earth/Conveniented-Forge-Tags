@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.util.Identifier;
@@ -23,16 +24,19 @@ public interface TagMergeRule {
     @Nullable
     String ctf(String commonTag);
 
+    @NotNull
     default Optional<Identifier> ctf(Identifier commonTag) {
         String f = this.ctf(commonTag.getPath());
         return f == null || f.equals(commonTag.getPath()) ? Optional.empty() : Optional.of(new Identifier("c", f));
     }
 
-    @Nullable
+    @NotNull
     default Optional<Identifier> ftc(Identifier forgeTag) {
         String c = this.ftc(forgeTag.getPath());
         return c == null || c.equals(forgeTag.getPath()) ? Optional.empty() : Optional.of(new Identifier("c", c));
     }
+
+    boolean isHighPriority();
 
     static class Common implements TagMergeRule {
         protected final String matchingPartForge;
@@ -45,13 +49,17 @@ public interface TagMergeRule {
 
         @Override
         public @Nullable String ctf(String commonTag) {
-            ArrayList<String> parts = new ArrayList<>();
-            parts.addAll(List.of(commonTag.split("_")));
+            ArrayList<String> parts = new ArrayList<>(List.of(commonTag.split("_")));
             if (commonTag.contains(matchingPartCommon) && parts.size() >= 2 + getSubCount(matchingPartCommon, "_")) {
                 Collections.reverse(parts);
                 return matchingPartForge + "/" + commonTag.replaceAll("_" + matchingPartCommon, "");
             }
             return null;
+        }
+
+        @Override
+        public boolean isHighPriority() {
+            return this.matchingPartCommon.contains("_");
         }
 
         @Override
@@ -96,6 +104,11 @@ public interface TagMergeRule {
             return ctfRule.convert(commonTag);
         }
 
+        @Override
+        public boolean isHighPriority() {
+            return false;
+        }
+
         @FunctionalInterface
         public static interface SingleRule {
             @Nullable
@@ -120,6 +133,11 @@ public interface TagMergeRule {
         @Override
         public @Nullable String ctf(String commonTag) {
             return commonTag.equals(common) ? forge : common;
+        }
+
+        @Override
+        public boolean isHighPriority() {
+            return true;
         }
 
     }
